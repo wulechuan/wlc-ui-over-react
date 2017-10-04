@@ -1,0 +1,41 @@
+.statuses-in-60-minutes {
+	margin: 20px auto;
+	// width: 600px;
+	min-height: 200px;
+
+	background-color: #f8f8f8;
+	box-shadow: 0 0 24px rgba(0,0,0,0.18);
+
+	.all-minutes {
+		margin: 50px;
+	}
+
+	.minutes-group {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.minute {
+		border-radius: 10000px;
+		flex-shrink: 0;
+		display: block;
+		width: 40px;
+		height: 40px;
+		margin: 20px;
+		border-width: 2px;
+		border-style: solid;
+
+		&.status-no-data {
+			border-style: dashed;
+			border-color: #ccc;
+		}
+
+		&.status-ok {
+			border-color: blue;
+		}
+
+		&.status-error {
+			border-color: #e34321;
+		}
+	}
+}

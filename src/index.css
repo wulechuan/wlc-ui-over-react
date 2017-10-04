@@ -1,0 +1,38 @@
+body {
+  margin: 0;
+  padding: 40px;
+  font-family: sans-serif;
+}
+.statuses-in-60-minutes {
+  margin: 20px auto;
+  min-height: 200px;
+  background-color: #f8f8f8;
+  box-shadow: 0 0 24px rgba(0,0,0,0.18);
+}
+.statuses-in-60-minutes .all-minutes {
+  margin: 50px;
+}
+.statuses-in-60-minutes .minutes-group {
+  display: flex;
+  justify-content: space-between;
+}
+.statuses-in-60-minutes .minute {
+  border-radius: 10000px;
+  flex-shrink: 0;
+  display: block;
+  width: 40px;
+  height: 40px;
+  margin: 20px;
+  border-width: 2px;
+  border-style: solid;
+}
+.statuses-in-60-minutes .minute.status-no-data {
+  border-style: dashed;
+  border-color: #ccc;
+}
+.statuses-in-60-minutes .minute.status-ok {
+  border-color: #00f;
+}
+.statuses-in-60-minutes .minute.status-error {
+  border-color: #e34321;
+}
