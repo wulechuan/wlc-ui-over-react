@@ -17,8 +17,108 @@ body {
   text-align: center;
 }
 .hero-value h2 {
-  margin: 0 auto;
+  position: relative;
+  margin: -45px auto 0;
+  width: 100%;
   font-size: 40px;
+  height: 90px;
+  line-height: 45px;
+  text-align: center;
+  overflow: hidden;
+}
+.hero-value h2 .value-slot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  bottom: 0;
+  opacity: 0;
+  transform: translateY(0);
+  animation: hero-value-leave-stage 0.32s ease-in backwards;
+}
+.hero-value h2 .value-slot.is-showing {
+  opacity: 1;
+  animation: hero-value-enter-stage 0.3s ease-out backwards 0.16s;
+}
+@-moz-keyframes hero-value-leave-stage {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-66%);
+  }
+}
+@-webkit-keyframes hero-value-leave-stage {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-66%);
+  }
+}
+@-o-keyframes hero-value-leave-stage {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-66%);
+  }
+}
+@keyframes hero-value-leave-stage {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-66%);
+  }
+}
+@-moz-keyframes hero-value-enter-stage {
+  from {
+    opacity: 0;
+    transform: translateY(80%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@-webkit-keyframes hero-value-enter-stage {
+  from {
+    opacity: 0;
+    transform: translateY(80%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@-o-keyframes hero-value-enter-stage {
+  from {
+    opacity: 0;
+    transform: translateY(80%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes hero-value-enter-stage {
+  from {
+    opacity: 0;
+    transform: translateY(80%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 .hero-value p {
   margin: 0 auto;
@@ -30,7 +130,7 @@ body {
   min-width: 288px;
   max-width: 332px;
   border-radius: 8px;
-  background-color: #233140;
+  background-color: #ddd;
   box-shadow: 0 0 24px rgba(0,0,0,0.58);
   transition: background-color 0.24s ease-out;
 }
@@ -59,11 +159,11 @@ body {
 }
 .statuses-in-60-minutes:hover,
 .statuses-in-60-minutes.all-minutes-should-render-blurry {
-  background-color: #bdcbdb;
+  background-color: #f7f7f7;
 }
 .statuses-in-60-minutes:hover .all-minutes,
 .statuses-in-60-minutes.all-minutes-should-render-blurry .all-minutes {
-  filter: blur(10px);
+  filter: blur(10.666666666666666px);
 }
 .statuses-in-60-minutes .minutes-group {
   display: flex;
@@ -79,15 +179,17 @@ body {
   height: 16px;
   border-width: 1px;
   border-style: solid;
+  transition: all 0.5s ease-out;
 }
 .statuses-in-60-minutes .minute.status-no-data {
   border-style: dashed;
-  border-color: rgba(255,255,255,0.25);
+  border-color: transparent;
   background-color: transparent;
+  box-shadow: 0 0 0 0 transparent, inset 0 0 6.4px 0 rgba(0,0,0,0.2);
 }
 .statuses-in-60-minutes .minute.status-ok {
-  border-color: rgba(51,136,34,0.6);
-  background-color: rgba(51,136,34,0.51);
+  border-color: rgba(34,102,34,0.2);
+  background-color: rgba(34,102,34,0.19);
 }
 .statuses-in-60-minutes .minute.status-error {
   border-color: #f44;

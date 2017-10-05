@@ -1,18 +1,25 @@
 .statuses-in-60-minutes {
 	$color-component-bkg = #ddd;
-	$color-component-bkg = #233140;
-	$color-status-no-data-bdr = rgba(white, 0.25);
-	$color-status-ok-bdr = rgba(#382, 0.6);
+	// $color-component-bkg = #233140;
+
+	// if light($color-component-bkg) {
+	// 	$color-status-no-data-bdr = rgba(black, 0.18);
+	// } else {
+	// 	$color-status-no-data-bdr = rgba(white, 0.18);
+	// }
+	$color-status-no-data-bdr = transparent;
+
+	$color-status-ok-bdr = rgba(#262, 0.2);
 	$color-status-error-bdr = #f44;
 
 	$color-status-no-data-bkg = transparent;
-	$color-status-ok-bkg = rgba($color-status-ok-bdr, 0.51);
+	$color-status-ok-bkg = rgba($color-status-ok-bdr, 0.19);
 	$color-status-error-bkg = rgba($color-status-error-bdr, 0.79);
 
 	$border-radii = 8px;
 
 	$minute-size = 16px;
-	$minute-blurry-radius = $minute-size / 1.6;
+	$minute-blurry-radius = $minute-size / 1.5;
 	$minute-border-width = 1px;
 	$minute-horizontal-gap-in-regular-mode = $minute-size / 2;
 	$minute-vertical-gap-in-regular-mode = $minute-size / 2;
@@ -82,11 +89,13 @@
 		height: $minute-size;
 		border-width: $minute-border-width;
 		border-style: solid;
+		transition: all 0.5s ease-out;
 
 		&.status-no-data {
 			border-style: dashed;
 			border-color: $color-status-no-data-bdr;
 			background-color: $color-status-no-data-bkg;
+			box-shadow: 0 0 0 0 transparent, inset 0 0 ($minute-size/2.5) 0 rgba(black, 0.2);
 		}
 
 		&.status-ok {

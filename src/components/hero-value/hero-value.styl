@@ -16,8 +16,42 @@
 	text-align: center;
 
 	h2 {
-		margin: 0 auto;
-		font-size: 40px;
+		$font-size = 40px;
+		$line-height = $font-size * 1.125;
+		position: relative;
+		margin: (- $line-height) auto 0;
+		width: 100%;
+		font-size: $font-size;
+		height: $line-height * 2;
+		line-height: $line-height;
+		text-align: center;
+		overflow: hidden;
+
+		.value-slot {
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 50%;
+			bottom: 0;
+			opacity: 0;
+			transform: translateY(0);
+			animation: hero-value-leave-stage 0.32s ease-in backwards;
+
+			@keyframes hero-value-leave-stage {
+				from { opacity: 1; transform: translateY(0); }
+				to   { opacity: 0; transform: translateY(-66%); }
+			}
+
+			&.is-showing {
+				opacity: 1;
+				animation: hero-value-enter-stage 0.3s ease-out backwards 0.16s;
+			}
+
+			@keyframes hero-value-enter-stage {
+				from { opacity: 0; transform: translateY(80%); }
+				to   { opacity: 1; transform: translateY(0); }
+			}
+		}
 	}
 
 	p {

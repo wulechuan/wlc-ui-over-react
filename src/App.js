@@ -4,8 +4,8 @@ import StatusesIn60Minutes from './components/statuses-in-60-minutes'
 
 
 const fakeDataProvider = {
-    howManyMilleSecondsMeansOneMinute: 1000,
-    errorRatio: 0.087,
+    howManyMilleSecondsMeansOneMinute: 2000,
+    errorRatio: 0.187,
     currentMinute: NaN,
     fakeValueIntervalIndex: NaN,
     dataOfAllMinutes: [],
