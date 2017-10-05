@@ -22,7 +22,7 @@ export default class StatusesIn60Minutes extends Component {
 						{
 							statusesInGroups.map((minutesGroup, gi) => {
 								return (
-									<div className="minutes-group" data-group-index={gi+1}>
+									<div className="minutes-group" data-group-index={gi+1} key={gi+1}>
 									{
 										minutesGroup.map(function(statusId, mi) {
 											const minuteIndex = gi * MINUTES_COUNT_PER_GROUP + mi + 1
