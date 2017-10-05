@@ -1,12 +1,26 @@
 import React, { Component } from 'react';
+import HeroValue from './components/hero-value'
 import StatusesIn60Minutes from './components/statuses-in-60-minutes'
 
 class App extends Component {
+    constructor () {
+        super()
+        this.state = {
+            heroValue: 'N/A'
+        }
+    }
+
+    updateHeroValue(newValue) {
+        this.setState({
+            heroValue: newValue
+        })
+    }
+
     render() {
-        let currentMinute = Math.ceil(Math.random()*60)
+        let currentMinute = 19 + Math.ceil(Math.random()*20)
         const statusOfAllMinutes = []
         for (var i = 0; i < 60; i++) {
-            statusOfAllMinutes[i] = i > currentMinute ? 0 : (1 + Math.floor(Math.random()*2));
+            statusOfAllMinutes[i] = i > currentMinute ? 0 : (Math.random() > 0.93 ? 2 : 1);
         }
 
         return (
@@ -18,6 +32,12 @@ class App extends Component {
                         'status-ok',
                         'status-error'
                     ]}
+                    abstract={
+                        <HeroValue
+                            value={this.state.heroValue}
+                            description="Very Important!"
+                        />
+                    }
                 />
             </div>
         );

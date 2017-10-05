@@ -17,26 +17,28 @@ export default class StatusesIn60Minutes extends Component {
 		return (
 			<div className="statuses-in-60-minutes">
 				<div className="abstract">{this.props.abstract}</div>
-				<div className="all-minutes">
-					{
-						statusesInGroups.map((minutesGroup, gi) => {
-							return (
-								<div className="minutes-group" data-group-index={gi+1}>
-								{
-									minutesGroup.map(function(statusId, mi) {
-										const minuteIndex = gi * MINUTES_COUNT_PER_GROUP + mi + 1
-										return <StatusOfOneMinute
-											key={minuteIndex}
-											minute={minuteIndex}
-											classNameOfStatus={allPossibleStatusClassNames[statusId]}
-											statusId={statusId}
-											/>
-									}, this)
-								}
-								</div>
-							)
-						})
-					}
+				<div className="all-minutes-wrapper">
+					<div className="all-minutes">
+						{
+							statusesInGroups.map((minutesGroup, gi) => {
+								return (
+									<div className="minutes-group" data-group-index={gi+1}>
+									{
+										minutesGroup.map(function(statusId, mi) {
+											const minuteIndex = gi * MINUTES_COUNT_PER_GROUP + mi + 1
+											return <StatusOfOneMinute
+												key={minuteIndex}
+												minute={minuteIndex}
+												classNameOfStatus={allPossibleStatusClassNames[statusId]}
+												statusId={statusId}
+												/>
+										}, this)
+									}
+									</div>
+								)
+							})
+						}
+					</div>
 				</div>
 			</div>
 		)

@@ -2,37 +2,91 @@ body {
   margin: 0;
   padding: 40px;
   font-family: sans-serif;
+  background-color: #222;
+}
+.hero-value {
+  margin: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+.hero-value h2 {
+  margin: 0 auto;
+  font-size: 40px;
+}
+.hero-value p {
+  margin: 16px auto 0 auto;
+  font-size: 16px;
 }
 .statuses-in-60-minutes {
-  margin: 20px auto;
-  min-height: 200px;
-  background-color: #f8f8f8;
-  box-shadow: 0 0 24px rgba(0,0,0,0.18);
+  position: relative;
+  margin: auto;
+  min-width: 288px;
+  max-width: 332px;
+  border-radius: 8px;
+  background-color: #233140;
+  box-shadow: 0 0 24px rgba(0,0,0,0.58);
+  transition: background-color 0.24s ease-out;
+}
+.statuses-in-60-minutes .abstract {
+  overflow: hidden;
+  margin: 0;
+  position: absolute;
+  border-radius: 8px;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 20;
+  transition: background-color 0.24s ease-out;
+}
+.statuses-in-60-minutes .all-minutes-wrapper {
+  overflow: hidden;
+  margin: 0;
 }
 .statuses-in-60-minutes .all-minutes {
-  margin: 50px;
+  margin: 20px 20px;
+  transition-property: filter;
+  transition-timing-function: ease-out;
+  transition-duration: 0.24s;
+  filter: blur(0px);
+}
+.statuses-in-60-minutes:hover,
+.statuses-in-60-minutes.all-minutes-should-render-blurry {
+  background-color: #bdcbdb;
+}
+.statuses-in-60-minutes:hover .all-minutes,
+.statuses-in-60-minutes.all-minutes-should-render-blurry .all-minutes {
+  filter: blur(10px);
 }
 .statuses-in-60-minutes .minutes-group {
   display: flex;
   justify-content: space-between;
 }
 .statuses-in-60-minutes .minute {
+  box-sizing: border-box;
   border-radius: 10000px;
   flex-shrink: 0;
   display: block;
-  width: 40px;
-  height: 40px;
-  margin: 20px;
-  border-width: 2px;
+  margin: 4px 4px;
+  width: 16px;
+  height: 16px;
+  border-width: 1px;
   border-style: solid;
 }
 .statuses-in-60-minutes .minute.status-no-data {
   border-style: dashed;
-  border-color: #ccc;
+  border-color: rgba(255,255,255,0.25);
+  background-color: transparent;
 }
 .statuses-in-60-minutes .minute.status-ok {
-  border-color: #00f;
+  border-color: rgba(51,136,34,0.6);
+  background-color: rgba(51,136,34,0.51);
 }
 .statuses-in-60-minutes .minute.status-error {
-  border-color: #e34321;
+  border-color: #f44;
+  background-color: rgba(255,68,68,0.79);
+  box-shadow: 0 0 12px 0 #f44;
 }

@@ -1,13 +1,70 @@
 .statuses-in-60-minutes {
-	margin: 20px auto;
-	// width: 600px;
-	min-height: 200px;
+	$color-component-bkg = #ddd;
+	$color-component-bkg = #233140;
+	$color-status-no-data-bdr = rgba(white, 0.25);
+	$color-status-ok-bdr = rgba(#382, 0.6);
+	$color-status-error-bdr = #f44;
 
-	background-color: #f8f8f8;
-	box-shadow: 0 0 24px rgba(0,0,0,0.18);
+	$color-status-no-data-bkg = transparent;
+	$color-status-ok-bkg = rgba($color-status-ok-bdr, 0.51);
+	$color-status-error-bkg = rgba($color-status-error-bdr, 0.79);
+
+	$border-radii = 8px;
+
+	$minute-size = 16px;
+	$minute-blurry-radius = $minute-size / 1.6;
+	$minute-border-width = 1px;
+	$minute-horizontal-gap-in-regular-mode = $minute-size / 2;
+	$minute-vertical-gap-in-regular-mode = $minute-size / 2;
+	$all-minutes-block-margin-horizontal = 20px;
+	$all-minutes-block-margin-vertical = 20px;
+
+	position: relative;
+	margin: auto;
+	min-width: ($minute-size * 10 + $minute-horizontal-gap-in-regular-mode * 11 + $all-minutes-block-margin-horizontal * 2);
+	max-width: (@min-width + $minute-horizontal-gap-in-regular-mode * 11 / 2);
+	border-radius: $border-radii;
+	background-color: $color-component-bkg;
+	box-shadow: 0 0 24px rgba(0,0,0,0.58);
+	transition: background-color 0.24s ease-out;
+
+	.abstract {
+		overflow: hidden; // 为了遮挡内部DOM在blur之后溢出的颜色。
+		margin: 0; // 为了遮挡内部DOM在blur之后溢出的颜色。
+		position: absolute;
+		border-radius: $border-radii;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		z-index: 20;
+		transition: background-color 0.24s ease-out;
+	}
+
+	.all-minutes-wrapper {
+		overflow: hidden; // 为了遮挡内部DOM在blur之后溢出的颜色。
+		margin: 0; // 为了遮挡内部DOM在blur之后溢出的颜色。
+	}
 
 	.all-minutes {
-		margin: 50px;
+		margin: $all-minutes-block-margin-vertical  $all-minutes-block-margin-horizontal;
+		transition-property: filter;
+		transition-timing-function: ease-out;
+		transition-duration: 0.24s;
+		filter: blur(0px);
+	}
+
+	&:hover,
+	&.all-minutes-should-render-blurry {
+		background-color: $color-component-bkg + 75%;
+
+		// .abstract {
+		// 	background-color: rgba(blue, 0.22);
+		// }
+
+		.all-minutes {
+			filter: blur($minute-blurry-radius);
+		}
 	}
 
 	.minutes-group {
@@ -16,26 +73,31 @@
 	}
 
 	.minute {
+		box-sizing: border-box;
 		border-radius: 10000px;
 		flex-shrink: 0;
 		display: block;
-		width: 40px;
-		height: 40px;
-		margin: 20px;
-		border-width: 2px;
+		margin: ($minute-vertical-gap-in-regular-mode / 2)  ($minute-horizontal-gap-in-regular-mode / 2);
+		width: $minute-size;
+		height: $minute-size;
+		border-width: $minute-border-width;
 		border-style: solid;
 
 		&.status-no-data {
 			border-style: dashed;
-			border-color: #ccc;
+			border-color: $color-status-no-data-bdr;
+			background-color: $color-status-no-data-bkg;
 		}
 
 		&.status-ok {
-			border-color: blue;
+			border-color: $color-status-ok-bdr;
+			background-color: $color-status-ok-bkg;
 		}
 
 		&.status-error {
-			border-color: #e34321;
+			border-color: $color-status-error-bdr;
+			background-color: $color-status-error-bkg;
+			box-shadow: 0 0 12px 0 $color-status-error-bdr;
 		}
 	}
 }
