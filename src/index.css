@@ -126,13 +126,22 @@ body {
 }
 .statuses-in-60-minutes {
   position: relative;
+  display: inline-block;
   margin: auto;
-  min-width: 288px;
-  max-width: 332px;
+  width: 280px;
+  padding-top: 50px;
   border-radius: 8px;
   background-color: #ddd;
   box-shadow: 0 0 24px rgba(0,0,0,0.58);
   transition: background-color 0.24s ease-out;
+}
+.statuses-in-60-minutes .controls {
+  position: absolute;
+  left: auto;
+  right: 0;
+  top: 0;
+  margin: 16px 16px;
+  z-index: 25;
 }
 .statuses-in-60-minutes .abstract {
   overflow: hidden;
@@ -149,36 +158,19 @@ body {
 .statuses-in-60-minutes .all-minutes-wrapper {
   overflow: hidden;
   margin: 0;
+  padding: 12px 12px;
 }
 .statuses-in-60-minutes .all-minutes {
-  margin: 20px 20px;
+  width: 248px;
+  height: 152px;
   transition-property: filter;
   transition-timing-function: ease-out;
   transition-duration: 0.24s;
   filter: blur(0px);
 }
-.statuses-in-60-minutes:hover,
-.statuses-in-60-minutes.all-minutes-should-render-blurry {
-  background-color: #f7f7f7;
-}
-.statuses-in-60-minutes:hover .all-minutes,
-.statuses-in-60-minutes.all-minutes-should-render-blurry .all-minutes {
-  filter: blur(10.666666666666666px);
-}
-.statuses-in-60-minutes .minutes-group {
-  display: flex;
-  justify-content: space-between;
-}
 .statuses-in-60-minutes .minute {
   box-sizing: border-box;
-  border-radius: 10000px;
   flex-shrink: 0;
-  display: block;
-  margin: 4px 4px;
-  width: 16px;
-  height: 16px;
-  border-width: 1px;
-  border-style: solid;
   transition: all 0.5s ease-out;
 }
 .statuses-in-60-minutes .minute.status-no-data {
@@ -195,4 +187,45 @@ body {
   border-color: #f44;
   background-color: rgba(255,68,68,0.79);
   box-shadow: 0 0 12px 0 #f44;
+}
+.statuses-in-60-minutes.style-default:hover,
+.statuses-in-60-minutes.style-default.all-minutes-should-render-blurry {
+  background-color: #f7f7f7;
+}
+.statuses-in-60-minutes.style-default:hover .all-minutes,
+.statuses-in-60-minutes.style-default.all-minutes-should-render-blurry .all-minutes {
+  filter: blur(10.666666666666666px);
+}
+.statuses-in-60-minutes.style-default .all-minutes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.statuses-in-60-minutes.style-default .minute {
+  display: inline-block;
+  border-radius: 10000px;
+  margin: 4px 4px;
+  width: 16px;
+  height: 16px;
+  border-width: 1px;
+  border-style: solid;
+}
+.statuses-in-60-minutes.style-bpc-classic .all-minutes {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+.statuses-in-60-minutes.style-bpc-classic .minutes-group {
+  position: static;
+  display: inline;
+}
+.statuses-in-60-minutes.style-bpc-classic .minute {
+  display: inline-block;
+  margin: 4px 1px;
+  width: 5px;
+  height: 16px;
+}
+.statuses-in-60-minutes.style-bpc-classic .minute.status-no-data {
+  display: none;
 }

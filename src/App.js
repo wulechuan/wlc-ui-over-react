@@ -76,7 +76,7 @@ class App extends Component {
         super()
         this.state = {
             heroValue: 'N/A',
-            statusesOfAllMinutes: []
+            statusIdOfAllMinutes: []
         }
     }
 
@@ -97,7 +97,7 @@ class App extends Component {
     updateData = (dataOfAllMinutes, latestMinuteWithData) => {
         this.setState({
             heroValue: dataOfAllMinutes[latestMinuteWithData].value,
-            statusesOfAllMinutes: dataOfAllMinutes.map(data=> {
+            statusIdOfAllMinutes: dataOfAllMinutes.map(data=> {
                 return data.status
             })
         })
@@ -106,11 +106,13 @@ class App extends Component {
     render() {
         return (
             <div className="app">
-                <p className="info">假设现实世界{fakeDataProvider.howManyMilleSecondsMeansOneMinute}毫秒代表该控件的1分钟</p>
+                <p className="info">假设现实世界{
+                    fakeDataProvider.howManyMilleSecondsMeansOneMinute
+                    }毫秒代表该控件的1分钟</p>
                 <p className="info">hover可见尝试性的外貌</p>
                 <StatusesIn60Minutes
-                    statuses={this.state.statusesOfAllMinutes}
-                    allPossibleStatusClassNames={[
+                    minutesStatus={this.state.statusIdOfAllMinutes}
+                    allPossibleStatusCssClassNames={[
                         'status-no-data',
                         'status-ok',
                         'status-error'

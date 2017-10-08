@@ -18,95 +18,144 @@
 
 	$border-radii = 8px;
 
-	$minute-size = 16px;
-	$minute-blurry-radius = $minute-size / 1.5;
+	$minute-size-in-default-style = 16px;
+	$minute-blurry-radius = $minute-size-in-default-style / 1.5;
 	$minute-border-width = 1px;
-	$minute-horizontal-gap-in-regular-mode = $minute-size / 2;
-	$minute-vertical-gap-in-regular-mode = $minute-size / 2;
-	$all-minutes-block-margin-horizontal = 20px;
-	$all-minutes-block-margin-vertical = 20px;
+	$minute-horizontal-gap-in-default-style = $minute-size-in-default-style / 2;
+	$minute-horizontal-half-gap-in-default-style = $minute-horizontal-gap-in-default-style / 2;
+	$minute-vertical-gap-in-default-style = $minute-size-in-default-style / 2;
+	$minute-vertical-half-gap-in-default-style = $minute-vertical-gap-in-default-style / 2;
+	$all-minutes-block-margin-horizontal = 16px;
+	$all-minutes-block-margin-vertical = 16px;
 
-	position: relative;
-	margin: auto;
-	min-width: ($minute-size * 10 + $minute-horizontal-gap-in-regular-mode * 11 + $all-minutes-block-margin-horizontal * 2);
-	max-width: (@min-width + $minute-horizontal-gap-in-regular-mode * 11 / 2);
-	border-radius: $border-radii;
-	background-color: $color-component-bkg;
-	box-shadow: 0 0 24px rgba(0,0,0,0.58);
-	transition: background-color 0.24s ease-out;
+	$all-minutes-width-in-default-style = ($minute-size-in-default-style * 10 + $minute-horizontal-gap-in-default-style * 11);
+	$all-minutes-height-in-default-style = ($minute-size-in-default-style * 6 + $minute-horizontal-gap-in-default-style * 7);
 
-	.abstract {
-		overflow: hidden; // 为了遮挡内部DOM在blur之后溢出的颜色。
-		margin: 0; // 为了遮挡内部DOM在blur之后溢出的颜色。
-		position: absolute;
+	& {
+		position: relative;
+		display: inline-block;
+		margin: auto;
+		width: $all-minutes-width-in-default-style + $all-minutes-block-margin-horizontal * 2;
+		padding-top: 50px;
 		border-radius: $border-radii;
-		left: 0;
-		right: 0;
-		top: 0;
-		bottom: 0;
-		z-index: 20;
+		background-color: $color-component-bkg;
+		box-shadow: 0 0 24px rgba(0,0,0,0.58);
 		transition: background-color 0.24s ease-out;
-	}
 
-	.all-minutes-wrapper {
-		overflow: hidden; // 为了遮挡内部DOM在blur之后溢出的颜色。
-		margin: 0; // 为了遮挡内部DOM在blur之后溢出的颜色。
-	}
+		.controls {
+			position: absolute;
+			left: auto;
+			right: 0;
+			top: 0;
+			margin: $all-minutes-block-margin-vertical  $all-minutes-block-margin-horizontal
+			z-index: 25;
+		}
 
-	.all-minutes {
-		margin: $all-minutes-block-margin-vertical  $all-minutes-block-margin-horizontal;
-		transition-property: filter;
-		transition-timing-function: ease-out;
-		transition-duration: 0.24s;
-		filter: blur(0px);
-	}
+		.abstract {
+			overflow: hidden; // 为了遮挡内部DOM在blur之后溢出的颜色。
+			margin: 0; // 为了遮挡内部DOM在blur之后溢出的颜色。
+			position: absolute;
+			border-radius: $border-radii;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			z-index: 20;
+			transition: background-color 0.24s ease-out;
+		}
 
-	&:hover,
-	&.all-minutes-should-render-blurry {
-		background-color: $color-component-bkg + 75%;
-
-		// .abstract {
-		// 	background-color: rgba(blue, 0.22);
-		// }
+		.all-minutes-wrapper {
+			overflow: hidden; // 为了遮挡内部DOM在blur之后溢出的颜色。
+			margin: 0; // 为了遮挡内部DOM在blur之后溢出的颜色。
+			padding: ($all-minutes-block-margin-vertical   - $minute-vertical-half-gap-in-default-style)\
+				     ($all-minutes-block-margin-horizontal - $minute-horizontal-half-gap-in-default-style);
+		}
 
 		.all-minutes {
-			filter: blur($minute-blurry-radius);
+			width: $all-minutes-width-in-default-style;
+			height: $all-minutes-height-in-default-style;
+			transition-property: filter;
+			transition-timing-function: ease-out;
+			transition-duration: 0.24s;
+			filter: blur(0px);
+		}
+
+		.minute {
+			box-sizing: border-box;
+			flex-shrink: 0;
+			transition: all 0.5s ease-out;
+
+			&.status-no-data {
+				border-style: dashed;
+				border-color: $color-status-no-data-bdr;
+				background-color: $color-status-no-data-bkg;
+				box-shadow: 0 0 0 0 transparent, inset 0 0 ($minute-size-in-default-style/2.5) 0 rgba(black, 0.2);
+			}
+
+			&.status-ok {
+				border-color: $color-status-ok-bdr;
+				background-color: $color-status-ok-bkg;
+			}
+
+			&.status-error {
+				border-color: $color-status-error-bdr;
+				background-color: $color-status-error-bkg;
+				box-shadow: 0 0 12px 0 $color-status-error-bdr;
+			}
 		}
 	}
 
-	.minutes-group {
-		display: flex;
-		justify-content: space-between;
+	&.style-default {
+
+		&:hover,
+		&.all-minutes-should-render-blurry {
+			background-color: $color-component-bkg + 75%;
+
+			.all-minutes {
+				filter: blur($minute-blurry-radius);
+			}
+		}
+
+		.all-minutes {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+		}
+
+		.minute {
+			display: inline-block;
+			border-radius: 10000px;
+			margin: ($minute-vertical-gap-in-default-style / 2)  ($minute-horizontal-gap-in-default-style / 2);
+			width: $minute-size-in-default-style;
+			height: $minute-size-in-default-style;
+			border-width: $minute-border-width;
+			border-style: solid;
+		}
 	}
 
-	.minute {
-		box-sizing: border-box;
-		border-radius: 10000px;
-		flex-shrink: 0;
-		display: block;
-		margin: ($minute-vertical-gap-in-regular-mode / 2)  ($minute-horizontal-gap-in-regular-mode / 2);
-		width: $minute-size;
-		height: $minute-size;
-		border-width: $minute-border-width;
-		border-style: solid;
-		transition: all 0.5s ease-out;
+	&.style-bpc-classic {
 
-		&.status-no-data {
-			border-style: dashed;
-			border-color: $color-status-no-data-bdr;
-			background-color: $color-status-no-data-bkg;
-			box-shadow: 0 0 0 0 transparent, inset 0 0 ($minute-size/2.5) 0 rgba(black, 0.2);
+		.all-minutes {
+			display: flex;
+			flex-wrap: nowrap;
+			flex-direction: row-reverse;
+			justify-content: flex-end;
 		}
 
-		&.status-ok {
-			border-color: $color-status-ok-bdr;
-			background-color: $color-status-ok-bkg;
+		.minutes-group {
+			position: static;
+			display: inline;
 		}
 
-		&.status-error {
-			border-color: $color-status-error-bdr;
-			background-color: $color-status-error-bkg;
-			box-shadow: 0 0 12px 0 $color-status-error-bdr;
+		.minute {
+			display: inline-block;
+			margin: ($minute-vertical-gap-in-default-style / 2)  1px;
+			width: 5px;
+			height: $minute-size-in-default-style;
+
+			&.status-no-data {
+				display: none;
+			}
 		}
 	}
 }
