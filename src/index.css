@@ -2,12 +2,12 @@ body {
   margin: 0;
   padding: 40px;
   font-family: sans-serif;
+  color: #fff;
   background-color: #222;
   text-align: center;
 }
-.info {
-  text-align: center;
-  color: #fff;
+.info-tips {
+  margin-bottom: 60px;
 }
 .hero-value {
   margin: auto;
@@ -142,8 +142,10 @@ body {
   box-sizing: border-box;
   flex-shrink: 0;
   transition: all 0.5s ease-out;
+  cursor: pointer;
 }
 .statuses-in-60-minutes .minute.status-no-data {
+  cursor: default;
   border-style: dashed;
   border-color: transparent;
   background-color: transparent;
@@ -175,14 +177,14 @@ body {
   border-style: solid;
 }
 .statuses-in-60-minutes.all-minutes-should-be-blurry .all-minutes {
-  filter: blur(16px);
+  filter: blur(8px);
 }
 .statuses-in-60-minutes.style-domino-row .all-minutes {
   display: flex;
   flex-wrap: nowrap;
   flex-direction: row-reverse;
   justify-content: flex-end;
-  height: initial;
+  height: auto;
   overflow: hidden;
 }
 .statuses-in-60-minutes.style-domino-row .minute {
@@ -200,6 +202,7 @@ body {
   margin: auto;
   padding-top: 50px;
   border-radius: 8px;
+  color: #000;
   background-color: #fff;
   box-shadow: 0 0 24px rgba(0,0,0,0.58);
   transition: background-color 0.24s ease-out;
@@ -218,21 +221,25 @@ body {
   z-index: 20;
   transition: background-color 0.24s ease-out;
 }
+.apc-card .statuses-in-60-minutes {
+  z-index: 1;
+}
+.apc-card.style-domino-row .abstract,
 .apc-card.style-default .abstract {
+  position: relative;
+}
+.apc-card.style-compact .abstract {
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
 }
-.apc-card.style-domino-row .abstract {
-  position: relative;
+.apc-card.style-compact:hover .abstract {
+  opacity: 0.5;
+  z-index: 0;
+  filter: blur(10px);
 }
-.apc-card.style-domino-row .statuses-in-60-minutes {
-  display: flex;
-  flex-wrap: nowrap;
-  flex-direction: row-reverse;
-  justify-content: flex-end;
-  height: initial;
-  overflow: hidden;
+.apc-card.style-compact:hover .statuses-in-60-minutes .all-minutes {
+  filter: blur(0);
 }

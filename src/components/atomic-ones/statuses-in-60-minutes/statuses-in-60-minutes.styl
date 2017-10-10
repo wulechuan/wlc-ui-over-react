@@ -8,7 +8,7 @@
 	$color-status-error-bkg = rgba($color-status-error-bdr, 0.79);
 
 	$minute-size-in-default-style = 16px;
-	$minute-blurry-radius = floor($minute-size-in-default-style);
+	$minute-blurry-radius = floor($minute-size-in-default-style / 2);
 	$minute-border-width = 1px;
 	$minute-horizontal-gap-in-default-style = floor($minute-size-in-default-style / 2);
 	$minute-horizontal-half-gap-in-default-style = floor($minute-horizontal-gap-in-default-style / 2);
@@ -39,8 +39,10 @@
 			box-sizing: border-box;
 			flex-shrink: 0;
 			transition: all 0.5s ease-out;
+			cursor: pointer;
 
 			&.status-no-data {
+				cursor: default;
 				border-style: dashed;
 				border-color: $color-status-no-data-bdr;
 				background-color: $color-status-no-data-bkg;
@@ -93,7 +95,7 @@
 			flex-wrap: nowrap;
 			flex-direction: row-reverse;
 			justify-content: flex-end;
-			height: initial;
+			height: auto;
 			overflow: hidden;
 		}
 

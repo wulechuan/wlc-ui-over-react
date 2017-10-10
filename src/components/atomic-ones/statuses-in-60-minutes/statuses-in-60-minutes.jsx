@@ -11,7 +11,8 @@ export default class StatusesIn60Minutes extends Component {
 		const {
 			styleCssClassName,
 			allMinutesStatusId,
-			allPossibleStatusCssClassNames = STATUSES_IN_60_MINUTES_ALL_POSSIBLE_STATUS_CSS_CLASS_NAMES_DEFAULT
+			allPossibleStatusCssClassNames,
+			onMinuteClick
 		} = this.props
 
 		return (
@@ -27,6 +28,7 @@ export default class StatusesIn60Minutes extends Component {
 							minuteIndex={minuteIndex}
 							statusId={statusId}
 							allPossibleStatusCssClassNames={allPossibleStatusCssClassNames}
+							onMinuteClick={onMinuteClick}
 						/>
 					})
 				}</div>
@@ -36,8 +38,23 @@ export default class StatusesIn60Minutes extends Component {
 }
 
 class StatusOfOneMinute extends Component {
+	handleClick = (event) => {
+		if (this.props.statusId !== 0 && this.props.onMinuteClick) {
+			const wrappedEvent = {
+				minuteIndex: this.props.minuteIndex,
+				minuteStatusId: this.props.statusId,
+				event
+			}
+			this.props.onMinuteClick(wrappedEvent)
+		}
+	}
+
 	render() {
-		const { minuteIndex, statusId, allPossibleStatusCssClassNames } = this.props
+		const {
+			minuteIndex,
+			statusId,
+			allPossibleStatusCssClassNames = STATUSES_IN_60_MINUTES_ALL_POSSIBLE_STATUS_CSS_CLASS_NAMES_DEFAULT,
+		} = this.props
 		return (
 			<div
 				data-minute={minuteIndex}
@@ -45,6 +62,7 @@ class StatusOfOneMinute extends Component {
 					'minute',
 					allPossibleStatusCssClassNames[statusId]
 				].join(' ')}
+				onClick={this.handleClick}
 			></div>
 		)
 	}

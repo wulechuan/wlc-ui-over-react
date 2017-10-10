@@ -16,6 +16,7 @@
 		// width: $all-minutes-width-in-default-style + ($all-minutes-block-margin-horizontal - $minute-horizontal-half-gap-in-default-style) * 2;
 		padding-top: 50px;
 		border-radius: $border-radii;
+		color: #000;
 		background-color: #fff;
 		box-shadow: 0 0 24px rgba(0,0,0,0.58);
 		transition: background-color 0.24s ease-out;
@@ -37,10 +38,20 @@
 		}
 
 		.statuses-in-60-minutes {
+			z-index: 1;
 		}
 	}
 
+	&.style-domino-row,
 	&.style-default {
+
+		.abstract {
+			position: relative;
+
+		}
+	}
+
+	&.style-compact {
 
 		.abstract {
 			position: absolute;
@@ -49,21 +60,17 @@
 			top: 0;
 			bottom: 0;
 		}
-	}
 
-	&.style-domino-row {
+		&:hover {
+			.abstract {
+				opacity: 0.5;
+				z-index: 0;
+				filter: blur(10px);
+			}
 
-		.abstract {
-			position: relative;
-		}
-
-		.statuses-in-60-minutes {
-			display: flex;
-			flex-wrap: nowrap;
-			flex-direction: row-reverse;
-			justify-content: flex-end;
-			height: initial;
-			overflow: hidden;
+			.statuses-in-60-minutes .all-minutes {
+				filter: blur(0);
+			}
 		}
 	}
 }

@@ -1,37 +1,37 @@
 import React, { Component } from 'react';
-import APCCard from '../components/compounds/apc-card'
+import LetsCallItAPCCard from '../components/compounds/apc-card'
 
+const howManyMilliSecondsMeansOneMinute = 2000
 const fakeDataStream = {
-    howManyMilleSecondsMeansOneMinute: 2000,
+    currentHour: Math.floor(Math.random()*24),
     errorRatio: 0.187,
     currentMinute: NaN,
-    fakeValueIntervalIndex: NaN,
     dataOfAllMinutes: [],
-    onInterval: undefined,
 
-    init(onInterval) {
-        if (typeof onInterval === 'function') {
-            this.onInterval = onInterval
-        }
-
-        this.fakeValueIntervalIndex = window.setInterval(
-            this._publishNewData.bind(this),
-            this.howManyMilleSecondsMeansOneMinute
-        )
-
+    init() {
         this._clearAllDataAndStartNewHour()
-        this._publishNewData()
     },
-    destroy() {
-        window.clearInterval(this.fakeValueIntervalIndex)
-    },
-    _publishNewData() {
+    publishNewData() {
         this._renewMinutesDataTill(this.currentMinute+1)
-        if (typeof this.onInterval === 'function') {
-            this.onInterval(this.dataOfAllMinutes, this.currentMinute-1)
+    },
+    _renewMinutesDataTill(newMinute) {
+        if (this.currentMinute >= 60) {
+            this._clearAllDataAndStartNewHour()
         }
+        
+        newMinute = newMinute % 61 // 取值范围是 [1, 60] 而不是 [0, 59]。
+        if (newMinute === 0) {
+            newMinute = 1
+        }
+
+        for (var i = this.currentMinute; i < newMinute; i++) {
+            this.dataOfAllMinutes[i] = this._generateDataForOneMinute()
+        }
+
+        this.currentMinute = newMinute
     },
     _clearAllDataAndStartNewHour() {
+        this.currentHour = (this.currentHour + 1) % 24
         this.currentMinute = 0;
         for (var i = 0; i < 60; i++) {
             this.dataOfAllMinutes[i] = {
@@ -54,71 +54,110 @@ const fakeDataStream = {
         function generateFakeStatus() {
             return Math.random() > errorRatio ? 1 : 2
         }
-    },
-    _renewMinutesDataTill(newMinute) {
-        if (this.currentMinute >= 60) {
-            this._clearAllDataAndStartNewHour()
-            this.dataOfAllMinutes[0] = this._generateDataForOneMinute()
-            this.currentMinute = 1;
-        } else {
-            for (var i = this.currentMinute; i < newMinute; i++) {
-                this.dataOfAllMinutes[i] = this._generateDataForOneMinute()
-            }
-            this.currentMinute = newMinute
-        }
     }
 }
 
-class AnAPCCard extends Component {
+export default class AnAutoRefreshingAPCCardWithSomeTips extends Component {
     constructor () {
         super()
         this.state = {
-            heroValue: 'N/A',
+            fetchingDataIntervalIsOn: false,
+            isFetchingData: false,
+            heroValuePrefix: '',
+            heroValue: '...',
             statusIdOfAllMinutes: []
         }
+        this.fetchingDataIntervalTime = howManyMilliSecondsMeansOneMinute // milliseconds
+        this.fetchingDataIntervalIndex = NaN
     }
 
     componentDidMount = () => {
-        fakeDataStream.init((...arg) => {
-            this.onDataReceived(...arg)
-        })
+        fakeDataStream.init()
+        this.fetchingDataIntervalTime = this.props.fetchingDataIntervalTime
+        this.startToFetchDataOnIntervals()
     }
 
     componentWillUnmount = () => {
-        fakeDataStream.destroy()
+        this.stopFetchingData()
     }
 
-    onDataReceived = (...arg) => {
-        this.updateData(...arg)
-    }
-
-    updateData = (dataOfAllMinutes, latestMinuteWithData) => {
+    startToFetchDataOnIntervals = () => {
         this.setState({
-            heroValue: dataOfAllMinutes[latestMinuteWithData].value,
+            fetchingDataIntervalIsOn: true
+        })
+
+        this.fetchingDataIntervalIndex = window.setInterval(
+            this.fetchData,
+            this.fetchingDataIntervalTime
+        )
+    }
+
+    stopFetchingData = () => {
+        window.clearInterval(this.fetchingDataIntervalIndex)
+
+        this.setState({
+            fetchingDataIntervalIsOn: false
+        })
+    }
+
+    fetchData = () => {
+        this.setState({
+            isFetchingData: true
+        })
+
+        fakeDataStream.publishNewData()
+        const fakePayload = fakeDataStream
+        this.onDataReceived(fakePayload)
+    }
+
+    onDataReceived = (payload) => {
+        this.setState({
+            isFetchingData: false
+        })
+
+        this.updateData(payload.dataOfAllMinutes, payload.currentHour, payload.currentMinute)
+    }
+
+    updateData = (dataOfAllMinutes, currentHour, latestMinuteWithData) => {
+        const heroValuePrefix = (currentHour < 10 ? ('0'+currentHour) : currentHour)
+            + ':'
+            + (latestMinuteWithData < 10 ? ('0'+latestMinuteWithData) : latestMinuteWithData)
+
+            this.setState({
+            heroValuePrefix,
+            heroValue: dataOfAllMinutes[latestMinuteWithData - 1].value,
             statusIdOfAllMinutes: dataOfAllMinutes.map(data=> {
                 return data.status
             })
         })
     }
 
+    onMinuteClick = (wrappedEventObject) => {
+        console.log(
+            'No.', wrappedEventObject.minuteIndex, 'minute',
+            '\nData of that minute:', fakeDataStream.dataOfAllMinutes[wrappedEventObject.minuteIndex],
+            '\nReact event object:', wrappedEventObject.event
+        )
+    }
+
     render() {
         return (
             <div className="tryout-the-apc-card-component">
                 <div className="info-tips">
-                    <p className="info">假设现实世界{
-                        fakeDataStream.howManyMilleSecondsMeansOneMinute
+                    <p>假设现实世界{
+                        howManyMilliSecondsMeansOneMinute
                         }毫秒代表该控件的1分钟</p>
-                    <p className="info">hover可见尝试性的外貌</p>
+                    <p>hover可见尝试性的外貌</p>
                 </div>
 
-                <APCCard
+                <LetsCallItAPCCard
                     allMinutesStatusId={this.state.statusIdOfAllMinutes}
+                    heroValuePrefix={this.state.heroValuePrefix}
                     heroValue={this.state.heroValue}
                     heroValueDescription="万圆整"
+                    onMinuteClick={this.onMinuteClick}
                 />
             </div>
         );
     }
 }
-
-export default AnAPCCard;

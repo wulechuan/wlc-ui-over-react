@@ -19,8 +19,15 @@ export default class HeroValue extends Component {
 	}
 
 	render() {
+		let today = new Date()
+		today = [
+			today.getFullYear(),
+			today.getMonth() + 1,
+			today.getDate()
+		].join('.')
 		return (
 			<div className="hero-value">
+				<p className="prefix">{this.props.prefix ? (today + ' - ' + this.props.prefix) : '...'}</p>
 				<h2>{
 					this.valueOfAllSlots.map((value, index0) => {
 						const index1 = index0 + 1

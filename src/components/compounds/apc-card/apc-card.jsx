@@ -16,15 +16,11 @@ export const APC_CARD_ALL_POSSIBLE_STYLES = [
 
 export const statusesIn60MinutesAllPossibleStatusCssClassNames = undefined
 
-export default class APCCard extends Component {
+export default class LetsCallItAPCCard extends Component {
     constructor () {
         super()
-
-        this.instanceId = 'apc-card-'+Math.random().toFixed(10).slice(2)
         this.state = {
             currentStyleCssClassName: APC_CARD_ALL_POSSIBLE_STYLES[0].cssClassName,
-            heroValue: 'N/A',
-            allMinutesStatusId: []
         }
     }
 
@@ -34,7 +30,7 @@ export default class APCCard extends Component {
                 return 'style-default all-minutes-should-be-blurry'
 
             case 'style-domino-row':
-                return 'domino-row'
+                return 'style-domino-row'
 
             case 'style-default':
             default:
@@ -50,8 +46,13 @@ export default class APCCard extends Component {
 	}
 
     render() {
-        const { heroValue, heroValueDescription, allMinutesStatusId }
-            = this.props
+        const {
+            heroValue,
+            heroValuePrefix,
+            heroValueDescription,
+            allMinutesStatusId,
+            onMinuteClick
+        } = this.props
 
         return (
 			<div className={[
@@ -60,9 +61,7 @@ export default class APCCard extends Component {
 				].join(' ')}>
 
 				<div className="controls">
-                    <select type="checkbox" id={this.instanceId+'-style-selector'}
-						onChange={this.handleStyleSwitchChange}
-					>{
+                    <select type="checkbox" onChange={this.handleStyleSwitchChange}>{
                         APC_CARD_ALL_POSSIBLE_STYLES.map(style => {
                             return <option
                                 key={style.cssClassName}
@@ -74,6 +73,7 @@ export default class APCCard extends Component {
 
 				<div className="abstract">
                     <HeroValue
+                        prefix={heroValuePrefix}
                         value={heroValue}
                         description={heroValueDescription}
                     />
@@ -83,6 +83,7 @@ export default class APCCard extends Component {
                     styleCssClassName={this.decideStyleForStatusesIn60Minutes(this.state.currentStyleCssClassName)}
                     allPossibleStatusCssClassNames={statusesIn60MinutesAllPossibleStatusCssClassNames}
                     allMinutesStatusId={allMinutesStatusId}
+                    onMinuteClick={onMinuteClick}
 				/>
 			</div>
 		)
