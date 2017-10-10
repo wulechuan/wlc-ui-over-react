@@ -1,5 +1,5 @@
 .statuses-in-60-minutes {
-	$color-component-bkg = #ddd;
+	$color-component-bkg = #fff;
 	// $color-component-bkg = #233140;
 
 	// if light($color-component-bkg) {
@@ -19,12 +19,12 @@
 	$border-radii = 8px;
 
 	$minute-size-in-default-style = 16px;
-	$minute-blurry-radius = $minute-size-in-default-style / 1.5;
+	$minute-blurry-radius = floor($minute-size-in-default-style);
 	$minute-border-width = 1px;
-	$minute-horizontal-gap-in-default-style = $minute-size-in-default-style / 2;
-	$minute-horizontal-half-gap-in-default-style = $minute-horizontal-gap-in-default-style / 2;
-	$minute-vertical-gap-in-default-style = $minute-size-in-default-style / 2;
-	$minute-vertical-half-gap-in-default-style = $minute-vertical-gap-in-default-style / 2;
+	$minute-horizontal-gap-in-default-style = floor($minute-size-in-default-style / 2);
+	$minute-horizontal-half-gap-in-default-style = floor($minute-horizontal-gap-in-default-style / 2);
+	$minute-vertical-gap-in-default-style = floor($minute-size-in-default-style / 2);
+	$minute-vertical-half-gap-in-default-style = floor($minute-vertical-gap-in-default-style / 2);
 	$all-minutes-block-margin-horizontal = 16px;
 	$all-minutes-block-margin-vertical = 16px;
 
@@ -35,7 +35,7 @@
 		position: relative;
 		display: inline-block;
 		margin: auto;
-		width: $all-minutes-width-in-default-style + ($all-minutes-block-margin-horizontal - $minute-horizontal-half-gap-in-default-style) * 2;
+		// width: $all-minutes-width-in-default-style + ($all-minutes-block-margin-horizontal - $minute-horizontal-half-gap-in-default-style) * 2;
 		padding-top: 50px;
 		border-radius: $border-radii;
 		background-color: $color-component-bkg;
@@ -52,8 +52,7 @@
 		}
 
 		.abstract {
-			overflow: hidden; // 为了遮挡内部DOM在blur之后溢出的颜色。
-			margin: 0; // 为了遮挡内部DOM在blur之后溢出的颜色。
+			margin: 0;
 			position: absolute;
 			border-radius: $border-radii;
 			left: 0;
@@ -89,7 +88,7 @@
 				border-style: dashed;
 				border-color: $color-status-no-data-bdr;
 				background-color: $color-status-no-data-bkg;
-				box-shadow: 0 0 0 0 transparent, inset 0 0 ($minute-size-in-default-style/2.5) 0 rgba(black, 0.2);
+				box-shadow: 0 0 0 0 transparent, inset 0 0 floor($minute-size-in-default-style/2.5) 0 rgba(black, 0.2);
 			}
 
 			&.status-ok {
@@ -125,7 +124,7 @@
 		.minute {
 			display: inline-block;
 			border-radius: 10000px;
-			margin: ($minute-vertical-gap-in-default-style / 2)  ($minute-horizontal-gap-in-default-style / 2);
+			margin: $minute-vertical-half-gap-in-default-style  $minute-horizontal-half-gap-in-default-style;
 			width: $minute-size-in-default-style;
 			height: $minute-size-in-default-style;
 			border-width: $minute-border-width;
@@ -135,21 +134,22 @@
 
 	&.style-bpc-classic {
 
+		.abstract {
+			position: relative;
+		}
+
 		.all-minutes {
 			display: flex;
 			flex-wrap: nowrap;
 			flex-direction: row-reverse;
 			justify-content: flex-end;
-		}
-
-		.minutes-group {
-			position: static;
-			display: inline;
+			height: initial;
+			overflow: hidden;
 		}
 
 		.minute {
 			display: inline-block;
-			margin: ($minute-vertical-gap-in-default-style / 2)  1px;
+			margin: $minute-vertical-half-gap-in-default-style  1px;
 			width: 5px;
 			height: $minute-size-in-default-style;
 

@@ -3,36 +3,37 @@ import HeroValue from './components/hero-value'
 import StatusesIn60Minutes from './components/statuses-in-60-minutes'
 
 
-const fakeDataProvider = {
+const fakeDataStream = {
     howManyMilleSecondsMeansOneMinute: 2000,
     errorRatio: 0.187,
     currentMinute: NaN,
     fakeValueIntervalIndex: NaN,
     dataOfAllMinutes: [],
     onInterval: undefined,
+
     init(onInterval) {
         if (typeof onInterval === 'function') {
             this.onInterval = onInterval
         }
 
         this.fakeValueIntervalIndex = window.setInterval(
-            this.publishNewData.bind(this),
+            this._publishNewData.bind(this),
             this.howManyMilleSecondsMeansOneMinute
         )
 
-        this.clearAllDataAndStartNewHour()
-        this.publishNewData()
+        this._clearAllDataAndStartNewHour()
+        this._publishNewData()
     },
     destroy() {
         window.clearInterval(this.fakeValueIntervalIndex)
     },
-    publishNewData() {
-        this.renewMinutesDataTill(this.currentMinute+1)
+    _publishNewData() {
+        this._renewMinutesDataTill(this.currentMinute+1)
         if (typeof this.onInterval === 'function') {
             this.onInterval(this.dataOfAllMinutes, this.currentMinute-1)
         }
     },
-    clearAllDataAndStartNewHour() {
+    _clearAllDataAndStartNewHour() {
         this.currentMinute = 0;
         for (var i = 0; i < 60; i++) {
             this.dataOfAllMinutes[i] = {
@@ -41,7 +42,7 @@ const fakeDataProvider = {
             };
         }
     },
-    generateDataForOneMinute() {
+    _generateDataForOneMinute() {
         const errorRatio = this.errorRatio
         return {
             value: generateFakeHeroValue(),
@@ -56,14 +57,14 @@ const fakeDataProvider = {
             return Math.random() > errorRatio ? 1 : 2
         }
     },
-    renewMinutesDataTill(newMinute) {
+    _renewMinutesDataTill(newMinute) {
         if (this.currentMinute >= 60) {
-            this.clearAllDataAndStartNewHour()
-            this.dataOfAllMinutes[0] = this.generateDataForOneMinute()
+            this._clearAllDataAndStartNewHour()
+            this.dataOfAllMinutes[0] = this._generateDataForOneMinute()
             this.currentMinute = 1;
         } else {
             for (var i = this.currentMinute; i < newMinute; i++) {
-                this.dataOfAllMinutes[i] = this.generateDataForOneMinute()
+                this.dataOfAllMinutes[i] = this._generateDataForOneMinute()
             }
             this.currentMinute = newMinute
         }
@@ -81,13 +82,13 @@ class App extends Component {
     }
 
     componentDidMount = () => {
-        fakeDataProvider.init((...arg) => {
+        fakeDataStream.init((...arg) => {
             this.onDataReceived(...arg)
         })
     }
 
     componentWillUnmount = () => {
-        fakeDataProvider.destroy()
+        fakeDataStream.destroy()
     }
 
     onDataReceived = (...arg) => {
@@ -107,7 +108,7 @@ class App extends Component {
         return (
             <div className="app">
                 <p className="info">假设现实世界{
-                    fakeDataProvider.howManyMilleSecondsMeansOneMinute
+                    fakeDataStream.howManyMilleSecondsMeansOneMinute
                     }毫秒代表该控件的1分钟</p>
                 <p className="info">hover可见尝试性的外貌</p>
                 <StatusesIn60Minutes

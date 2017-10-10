@@ -3,18 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "create-react-app-stylus": "^1.1.1",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "react-scripts": "1.0.14"
+    "react-scripts": "1.0.14",
+    "stylus": "^0.54.5"
   },
   "scripts": {
-    "stylus": "stylus -w src/*.styl -o src/index.css",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-scripts-with-stylus start src/index.styl",
+    "build": "react-scripts-with-stylus build src/index.styl",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  },
-  "devDependencies": {
-    "stylus": "^0.54.5"
   }
 }
