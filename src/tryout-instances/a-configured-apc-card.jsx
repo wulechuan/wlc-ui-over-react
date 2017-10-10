@@ -18,7 +18,7 @@ const fakeDataStream = {
         if (this.currentMinute >= 60) {
             this._clearAllDataAndStartNewHour()
         }
-        
+
         newMinute = newMinute % 61 // 取值范围是 [1, 60] 而不是 [0, 59]。
         if (newMinute === 0) {
             newMinute = 1
@@ -119,11 +119,19 @@ export default class AnAutoRefreshingAPCCardWithSomeTips extends Component {
     }
 
     updateData = (dataOfAllMinutes, currentHour, latestMinuteWithData) => {
-        const heroValuePrefix = (currentHour < 10 ? ('0'+currentHour) : currentHour)
+        let today = new Date()
+		today = [
+			today.getFullYear(),
+			today.getMonth() + 1,
+			today.getDate()
+		].join('.')
+
+        const heroValuePrefix = today + ' - '
+            + (currentHour < 10 ? ('0'+currentHour) : currentHour)
             + ':'
             + (latestMinuteWithData < 10 ? ('0'+latestMinuteWithData) : latestMinuteWithData)
 
-            this.setState({
+        this.setState({
             heroValuePrefix,
             heroValue: dataOfAllMinutes[latestMinuteWithData - 1].value,
             statusIdOfAllMinutes: dataOfAllMinutes.map(data=> {
