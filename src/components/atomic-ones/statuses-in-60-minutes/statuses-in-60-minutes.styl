@@ -1,22 +1,11 @@
 .statuses-in-60-minutes {
-	$color-component-bkg = #fff;
-	// $color-component-bkg = #233140;
-
-	// if light($color-component-bkg) {
-	// 	$color-status-no-data-bdr = rgba(black, 0.18);
-	// } else {
-	// 	$color-status-no-data-bdr = rgba(white, 0.18);
-	// }
 	$color-status-no-data-bdr = transparent;
-
 	$color-status-ok-bdr = rgba(#262, 0.2);
 	$color-status-error-bdr = #f44;
 
 	$color-status-no-data-bkg = transparent;
 	$color-status-ok-bkg = rgba($color-status-ok-bdr, 0.19);
 	$color-status-error-bkg = rgba($color-status-error-bdr, 0.79);
-
-	$border-radii = 8px;
 
 	$minute-size-in-default-style = 16px;
 	$minute-blurry-radius = floor($minute-size-in-default-style);
@@ -28,50 +17,17 @@
 	$all-minutes-block-margin-horizontal = 16px;
 	$all-minutes-block-margin-vertical = 16px;
 
-	$all-minutes-width-in-default-style = ($minute-size-in-default-style * 10 + $minute-horizontal-gap-in-default-style * 11);
-	$all-minutes-height-in-default-style = ($minute-size-in-default-style * 6 + $minute-horizontal-gap-in-default-style * 7);
+	$all-minutes-width-in-default-style  = ($minute-size-in-default-style * 10 + $minute-horizontal-gap-in-default-style * 11);
+	$all-minutes-height-in-default-style = ($minute-size-in-default-style *  6 + $minute-horizontal-gap-in-default-style * 7);
 
 	& {
-		position: relative;
-		display: inline-block;
-		margin: auto;
-		// width: $all-minutes-width-in-default-style + ($all-minutes-block-margin-horizontal - $minute-horizontal-half-gap-in-default-style) * 2;
-		padding-top: 50px;
-		border-radius: $border-radii;
-		background-color: $color-component-bkg;
-		box-shadow: 0 0 24px rgba(0,0,0,0.58);
-		transition: background-color 0.24s ease-out;
-
-		.controls {
-			position: absolute;
-			left: auto;
-			right: 0;
-			top: 0;
-			margin: $all-minutes-block-margin-vertical  $all-minutes-block-margin-horizontal
-			z-index: 25;
-		}
-
-		.abstract {
-			margin: 0;
-			position: absolute;
-			border-radius: $border-radii;
-			left: 0;
-			right: 0;
-			top: 0;
-			bottom: 0;
-			z-index: 20;
-			transition: background-color 0.24s ease-out;
-		}
-
-		.all-minutes-wrapper {
-			overflow: hidden; // 为了遮挡内部DOM在blur之后溢出的颜色。
-			margin: 0; // 为了遮挡内部DOM在blur之后溢出的颜色。
-			padding: ($all-minutes-block-margin-vertical   - $minute-vertical-half-gap-in-default-style)\
-				     ($all-minutes-block-margin-horizontal - $minute-horizontal-half-gap-in-default-style);
-		}
+		overflow: hidden; // 为了遮挡内部DOM在blur之后溢出的颜色。
+		margin: 0; // 为了遮挡内部DOM在blur之后溢出的颜色。
+		padding: ($all-minutes-block-margin-vertical   - $minute-vertical-half-gap-in-default-style)\
+					($all-minutes-block-margin-horizontal - $minute-horizontal-half-gap-in-default-style);
 
 		.all-minutes {
-			width: $all-minutes-width-in-default-style;
+			width:  $all-minutes-width-in-default-style;
 			height: $all-minutes-height-in-default-style;
 			transition-property: filter;
 			transition-timing-function: ease-out;
@@ -104,16 +60,8 @@
 		}
 	}
 
+	&.all-minutes-should-be-blurry,
 	&.style-default {
-
-		&:hover,
-		&.all-minutes-should-render-blurry {
-			background-color: $color-component-bkg + 75%;
-
-			.all-minutes {
-				filter: blur($minute-blurry-radius);
-			}
-		}
 
 		.all-minutes {
 			display: flex;
@@ -132,11 +80,13 @@
 		}
 	}
 
-	&.style-bpc-classic {
-
-		.abstract {
-			position: relative;
+	&.all-minutes-should-be-blurry {
+		.all-minutes {
+			filter: blur($minute-blurry-radius);
 		}
+	}
+
+	&.style-domino-row {
 
 		.all-minutes {
 			display: flex;

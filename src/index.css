@@ -3,6 +3,7 @@ body {
   padding: 40px;
   font-family: sans-serif;
   background-color: #222;
+  text-align: center;
 }
 .info {
   text-align: center;
@@ -125,35 +126,6 @@ body {
   font-size: 16px;
 }
 .statuses-in-60-minutes {
-  position: relative;
-  display: inline-block;
-  margin: auto;
-  padding-top: 50px;
-  border-radius: 8px;
-  background-color: #fff;
-  box-shadow: 0 0 24px rgba(0,0,0,0.58);
-  transition: background-color 0.24s ease-out;
-}
-.statuses-in-60-minutes .controls {
-  position: absolute;
-  left: auto;
-  right: 0;
-  top: 0;
-  margin: 16px 16px;
-  z-index: 25;
-}
-.statuses-in-60-minutes .abstract {
-  margin: 0;
-  position: absolute;
-  border-radius: 8px;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  z-index: 20;
-  transition: background-color 0.24s ease-out;
-}
-.statuses-in-60-minutes .all-minutes-wrapper {
   overflow: hidden;
   margin: 0;
   padding: 12px 12px;
@@ -186,19 +158,13 @@ body {
   background-color: rgba(255,68,68,0.79);
   box-shadow: 0 0 12px 0 #f44;
 }
-.statuses-in-60-minutes.style-default:hover,
-.statuses-in-60-minutes.style-default.all-minutes-should-render-blurry {
-  background-color: #fff;
-}
-.statuses-in-60-minutes.style-default:hover .all-minutes,
-.statuses-in-60-minutes.style-default.all-minutes-should-render-blurry .all-minutes {
-  filter: blur(16px);
-}
+.statuses-in-60-minutes.all-minutes-should-be-blurry .all-minutes,
 .statuses-in-60-minutes.style-default .all-minutes {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 }
+.statuses-in-60-minutes.all-minutes-should-be-blurry .minute,
 .statuses-in-60-minutes.style-default .minute {
   display: inline-block;
   border-radius: 10000px;
@@ -208,10 +174,10 @@ body {
   border-width: 1px;
   border-style: solid;
 }
-.statuses-in-60-minutes.style-bpc-classic .abstract {
-  position: relative;
+.statuses-in-60-minutes.all-minutes-should-be-blurry .all-minutes {
+  filter: blur(16px);
 }
-.statuses-in-60-minutes.style-bpc-classic .all-minutes {
+.statuses-in-60-minutes.style-domino-row .all-minutes {
   display: flex;
   flex-wrap: nowrap;
   flex-direction: row-reverse;
@@ -219,12 +185,54 @@ body {
   height: initial;
   overflow: hidden;
 }
-.statuses-in-60-minutes.style-bpc-classic .minute {
+.statuses-in-60-minutes.style-domino-row .minute {
   display: inline-block;
   margin: 4px 1px;
   width: 5px;
   height: 16px;
 }
-.statuses-in-60-minutes.style-bpc-classic .minute.status-no-data {
+.statuses-in-60-minutes.style-domino-row .minute.status-no-data {
   display: none;
+}
+.apc-card {
+  position: relative;
+  display: inline-block;
+  margin: auto;
+  padding-top: 50px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 0 24px rgba(0,0,0,0.58);
+  transition: background-color 0.24s ease-out;
+}
+.apc-card .controls {
+  position: absolute;
+  left: auto;
+  right: 0;
+  top: 0;
+  margin: 16px;
+  z-index: 25;
+}
+.apc-card .abstract {
+  margin: 0;
+  border-radius: 8px;
+  z-index: 20;
+  transition: background-color 0.24s ease-out;
+}
+.apc-card.style-default .abstract {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+.apc-card.style-domino-row .abstract {
+  position: relative;
+}
+.apc-card.style-domino-row .statuses-in-60-minutes {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  height: initial;
+  overflow: hidden;
 }
