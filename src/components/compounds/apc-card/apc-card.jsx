@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import HeroValue from '../../atomic-ones/hero-value'
+import ClockInDigits       from '../../atomic-ones/clock-in-digits'
+import HeroValue           from '../../atomic-ones/hero-value'
 import StatusesIn60Minutes from '../../atomic-ones/statuses-in-60-minutes'
 
 export const APC_CARD_ALL_POSSIBLE_STYLES = [
@@ -20,7 +21,7 @@ export default class LetsCallItAPCCard extends Component {
     constructor () {
         super()
         this.state = {
-            currentStyleCssClassName: APC_CARD_ALL_POSSIBLE_STYLES[0].cssClassName,
+            currentStyleCssClassName: APC_CARD_ALL_POSSIBLE_STYLES[1].cssClassName,
         }
     }
 
@@ -48,7 +49,10 @@ export default class LetsCallItAPCCard extends Component {
     render() {
         const {
             heroValue,
-            heroValuePrefix,
+            date,
+            hour,
+            minute,
+            second,
             heroValueDescription,
             allMinutesStatusId,
             onMinuteClick
@@ -61,7 +65,10 @@ export default class LetsCallItAPCCard extends Component {
 				].join(' ')}>
 
 				<div className="controls">
-                    <select type="checkbox" onChange={this.handleStyleSwitchChange}>{
+                    <select type="checkbox"
+                        value={this.state.currentStyleCssClassName}
+                        onChange={this.handleStyleSwitchChange}
+                    >{
                         APC_CARD_ALL_POSSIBLE_STYLES.map(style => {
                             return <option
                                 key={style.cssClassName}
@@ -72,8 +79,17 @@ export default class LetsCallItAPCCard extends Component {
 				</div>
 
 				<div className="abstract">
+                    <p className="timestamp">
+                        <span className="date">{date}</span>
+                        &nbsp;-&nbsp;
+                        <ClockInDigits
+                            hour={hour}
+                            minute={minute}
+                            second={second}
+                        />
+                    </p>
                     <HeroValue
-                        prefix={heroValuePrefix}
+                        prefix={date}
                         value={heroValue}
                         description={heroValueDescription}
                     />

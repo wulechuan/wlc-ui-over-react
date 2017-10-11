@@ -9,9 +9,14 @@ body {
 .info-tips {
   margin-bottom: 60px;
 }
+.date {
+  font-family: monospace;
+}
+.clock-in-digits {
+  font-family: monospace;
+}
 .hero-value {
   margin: auto;
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -232,7 +237,7 @@ body {
   position: absolute;
   left: 0;
   right: 0;
-  top: 0;
+  top: 60px;
   bottom: 0;
 }
 .apc-card.style-compact:hover .abstract {

@@ -5,7 +5,7 @@ class App extends Component {
     render() {
         return (
             <div className="app">
-                <AnAutoRefreshingAPCCardWithSomeTips fetchingDataIntervalTime="2000" />
+                <AnAutoRefreshingAPCCardWithSomeTips howManyRealWorldMilliSecondsMeansOneMinute="60000" />
             </div>
         );
     }
